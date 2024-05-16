@@ -12,6 +12,11 @@
     };
 
     home-manager = {
+      url = "github:nix-community/home-manager/release-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    home-manager-unstable = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -36,6 +41,13 @@
                 inputs.nixpkgs-unstable
               );
 
+    # Based on loaded settings, set the home-manager version.
+    home-manager = (if (settings.packages == "stable")
+              then
+                inputs.home-manager
+              else
+                inputs.home-manager-unstable
+              );
     # Setup an overlay for unstable packages to include on stable environments.
     overlay-unstable = final: prev: {
         unstable = import inputs.nixpkgs-unstable {
@@ -65,12 +77,12 @@
       modules = [
         config
         inputs.disko.nixosModules.disko
-        inputs.home-manager.nixosModules.default
+        home-manager.nixosModules.default
       ];
     };
 
     # Function to configure home-manager for a user.
-    mkHome = config: inputs.home-manager.lib.homeManagerConfiguration {
+    mkHome = config: home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       extraSpecialArgs = {
         inherit inputs;
