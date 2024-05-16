@@ -11,7 +11,7 @@ if [[ -n $nixHostOverride ]]; then
 fi
 
 # Confirm host configuration is available; If not, we should not continue.
-if ! grep -q "nixosConfigurations.$host" flake.nix; then
+if ! grep -q "nixosConfigurations.$host " flake.nix; then
     host="default"
 fi
 

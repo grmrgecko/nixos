@@ -91,6 +91,10 @@
   # Nix Package Auto Cleanup
   nix = {
     settings.auto-optimise-store = true;
+    optimise = {
+      automatic = true;
+      dates = [ "03:45" ];
+    };
     gc = {
       automatic = true;
       dates = "weekly";

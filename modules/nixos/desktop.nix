@@ -67,6 +67,9 @@
     vlc
     kdePackages.k3b
 
+    # Desktop
+    polybar
+
     # Software defined radio
     gqrx
   ];

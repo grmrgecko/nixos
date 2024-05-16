@@ -76,6 +76,7 @@
 
     homeConfigurations = {
       ${settings.user.name} = mkHome ./users/main-user.nix;
+      "root" = mkHome ./users/root.nix;
     };
   };
 }

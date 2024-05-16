@@ -45,6 +45,7 @@
     };
     users = {
       ${settings.user.name} = import ../../users/main-user.nix;
+      "root" = import ../../users/root.nix;
     };
   };
 }

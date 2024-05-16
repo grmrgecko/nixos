@@ -2,17 +2,11 @@
 
 {
   imports = [
-    ../modules/home/git.nix
     ../modules/home/zsh.nix
-  ] ++ (if (builtins.pathExists ../modules/home/profiles/${settings.profile}.nix)
-            then
-              [ ../modules/home/profiles/${settings.profile}.nix ]
-            else
-              []
-            );
+  ];
 
-  home.username = settings.user.name;
-  home.homeDirectory = "/home/${settings.user.name}";
+  home.username = "root";
+  home.homeDirectory = "/root";
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
