@@ -1,6 +1,7 @@
 {
   description = "Nixos config flake";
 
+  # Package sources.
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -16,8 +17,10 @@
     };
   };
 
+  # Flake outputs, NixOS and Home Configurations.
   outputs = inputs@{ self, ... }:
   let
+    # Load settings.nix or the default if not exists.
     settings = (if (builtins.pathExists ./settings.nix)
                       then
                         (import ./settings.nix)
@@ -25,6 +28,7 @@
                         (import ./settings-default.nix)
                       );
 
+    # Based on loaded settings, set the nixpkgs version.
     nixpkgs = (if (settings.packages == "stable")
               then
                 inputs.nixpkgs
@@ -32,6 +36,7 @@
                 inputs.nixpkgs-unstable
               );
 
+    # Setup an overlay for unstable packages to include on stable environments.
     overlay-unstable = final: prev: {
         unstable = import inputs.nixpkgs-unstable {
           system = settings.system;
@@ -39,6 +44,7 @@
         };
     };
 
+    # Setup the main packages config with the overlays.
     pkgs = (import nixpkgs {
               system = settings.system;
               config = {
@@ -48,6 +54,7 @@
               overlays = [ overlay-unstable ];
             });
 
+    # Function to configure a system with our defaults.
     mkSystem = config: nixpkgs.lib.nixosSystem {
       system = settings.system;
       specialArgs = {
@@ -62,6 +69,7 @@
       ];
     };
 
+    # Function to configure home-manager for a user.
     mkHome = config: inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       extraSpecialArgs = {
@@ -71,9 +79,13 @@
       modules = [ config ];
     };
   in {
+    # NixOS configurations, in most cases we use default with a profile.
+    # Any host that needs specific configurations separate from what is included by default,
+    # will need its own configuration for its hostname.
     nixosConfigurations.default = mkSystem ./hosts/default/configuration.nix;
     nixosConfigurations.tama = mkSystem ./hosts/tama/configuration.nix;
 
+    # Home manager configurations, we do the main user from the configuration and root.
     homeConfigurations = {
       ${settings.user.name} = mkHome ./users/main-user.nix;
       "root" = mkHome ./users/root.nix;
