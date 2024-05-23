@@ -36,6 +36,7 @@
     unstable.nodejs_22
     pure-prompt
     fastfetch
+    home-manager
   ];
 
   home-manager = {

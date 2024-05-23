@@ -237,6 +237,7 @@ rec {
     name = "${gitName}";
     email = "${gitEmail}";
   };
+  networkmanager.profiles = {};
 }
 EOF
 

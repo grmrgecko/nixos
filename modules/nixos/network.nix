@@ -11,6 +11,7 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
   networking.networkmanager.enable = true;
+  networking.networkmanager.ensureProfiles.profiles = settings.networkmanager.profiles;
 
   environment.systemPackages = with pkgs; [
     dnsutils

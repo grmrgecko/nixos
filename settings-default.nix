@@ -2,7 +2,7 @@ rec {
   system = "x86_64-linux";
   timezone = "America/Chicago";
   locale = "en_US.UTF-8";
-  packages = "stable";
+  packages = "unstable";
   profile = "desktop";
   hostId = (builtins.substring 0 8 (builtins.readFile "/etc/machine-id"));
   hostName = "nixos";
@@ -27,4 +27,5 @@ rec {
     name = "GRMrGecko";
     email = "grmrgecko@gmail.com";
   };
+  networkmanager.profiles = {};
 }

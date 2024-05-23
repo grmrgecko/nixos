@@ -71,6 +71,8 @@
     cron
     mlocate
     tmux
+    screen
+    picocom
     killall
     pciutils
 

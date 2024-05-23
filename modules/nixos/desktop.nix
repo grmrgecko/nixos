@@ -69,6 +69,7 @@
 
     # Desktop
     polybar
+    appimage-run
 
     # Software defined radio
     gqrx

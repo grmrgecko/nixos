@@ -48,6 +48,7 @@
               else
                 inputs.home-manager-unstable
               );
+
     # Setup an overlay for unstable packages to include on stable environments.
     overlay-unstable = final: prev: {
         unstable = import inputs.nixpkgs-unstable {
