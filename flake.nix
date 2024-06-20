@@ -3,7 +3,7 @@
 
   # Package sources.
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     disko = {
@@ -12,7 +12,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -20,10 +20,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    flatpaks.url = "github:GermanBread/declarative-flatpak/stable";
   };
 
   # Flake outputs, NixOS and Home Configurations.
-  outputs = inputs@{ self, ... }:
+  outputs = inputs@{ self, flatpaks, ... }:
   let
     # Load settings.nix or the default if not exists.
     settings = (if (builtins.pathExists ./settings.nix)
@@ -76,9 +77,10 @@
         inherit settings;
       };
       modules = [
-        config
         inputs.disko.nixosModules.disko
         home-manager.nixosModules.default
+        flatpaks.nixosModules.default
+        config
       ];
     };
 
@@ -89,7 +91,10 @@
         inherit inputs;
         inherit settings;
       };
-      modules = [ config ];
+      modules = [
+        flatpaks.homeManagerModules.default
+        config
+      ];
     };
   in {
     # NixOS configurations, in most cases we use default with a profile.

@@ -45,7 +45,12 @@
       inherit settings;
     };
     users = {
-      ${settings.user.name} = import ../../users/main-user.nix;
+      ${settings.user.name} = {
+        imports = [
+          inputs.flatpaks.homeManagerModules.default
+          ../../users/main-user.nix
+        ];
+      };
       "root" = import ../../users/root.nix;
     };
   };

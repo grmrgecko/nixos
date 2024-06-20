@@ -4,6 +4,7 @@
   imports = [
     ../modules/home/git.nix
     ../modules/home/zsh.nix
+    ../modules/home/flatpaks.nix
   ] ++ (if (builtins.pathExists ../modules/home/profiles/${settings.profile}.nix)
             then
               [ ../modules/home/profiles/${settings.profile}.nix ]

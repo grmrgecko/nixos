@@ -39,20 +39,33 @@ chooseOpts() {
 
 # A looping function to choose Y or N.
 chooseYN() {
+    # Determine the default based on upper case Y or N in prompt.
     local default=""
     if [[ "$1" =~ \[.*([YN]).*\] ]]; then
         default=${BASH_REMATCH[1]}
     fi
-    echo -n "$1: "
-    read -r CHOICE
-    [[ -z $CHOICE ]] && CHOICE=$default
-    if [[ "$CHOICE" =~ ^[yY]$ ]]; then
-        CHOICE="y"
-    elif [[ "$CHOICE" =~ ^[nN]$ ]]; then
-        CHOICE="n"
-    else
-        chooseYN "$1"
-    fi
+
+    # Loop for the choice.
+    while true; do
+        # Prompt for choice.
+        echo -n "$1: "
+        read -r CHOICE
+
+        # If choice is empty, set choice to the default.
+        [[ -z $CHOICE ]] && CHOICE=$default
+
+        # If choice does not equal Y or N, continue.
+        # Otherwise set the global CHOICE variable to lowercase y or n.
+        # Lowercase allows for easy logic in code that calls this function.
+        if [[ "$CHOICE" =~ ^[yY]$ ]]; then
+            CHOICE="y"
+        elif [[ "$CHOICE" =~ ^[nN]$ ]]; then
+            CHOICE="n"
+        else
+            continue
+        fi
+        break
+    done
 }
 
 # Determine video drivers based on PCI devices.

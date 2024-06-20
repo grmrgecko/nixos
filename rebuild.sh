@@ -17,4 +17,4 @@ fi
 
 # Rebuild and switch.
 # shellcheck disable=SC2068
-nixos-rebuild switch --impure --flake "path:$nixosDir/#$host" $@
+sudo nixos-rebuild switch --impure --flake "path:$nixosDir/#$host" $@
