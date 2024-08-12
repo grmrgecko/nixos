@@ -133,8 +133,10 @@ if [[ "$CHOICE" == "y" ]]; then
     while true; do
         echo -n "Enter your luks encryption passphrase: "
         read -r -s luksPasswd
+        echo
         echo -n "Confirm your luks encryption passphrase: "
         read -r -s confirmLuksPasswd
+        echo
         if [[ "$luksPasswd" == "$confirmLuksPasswd" ]]; then
             break
         fi
@@ -147,7 +149,7 @@ fi
 # Get username for the main user.
 echo -n "Main user name [$defaultName]: "
 read -r name
-[[ -z $name ]] && name=$defaultName me
+[[ -z $name ]] && name=$defaultName
 
 # Get description for the main user.
 echo -n "Main user description [$defaultDescription]: "
