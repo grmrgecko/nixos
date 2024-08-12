@@ -15,6 +15,11 @@
     ../../modules/nixos/zfs.nix
   ];
 
+  # Fix AMD SATA bug?
+  boot.kernelParams = [
+    "iommu=soft"
+  ];
+
   # Enable NFS export for kvm storage.
   services.nfs.server.enable = true;
   services.nfs.server.exports = ''

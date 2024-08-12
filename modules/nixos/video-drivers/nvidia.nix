@@ -2,10 +2,8 @@
 
 {
   # Display drivers.
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
   };
   services.xserver.videoDrivers = [ "nvidia" ];
 
