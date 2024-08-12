@@ -160,8 +160,10 @@ read -r description
 while true; do
     echo -n "Enter password for main user: "
     read -r -s mainPasswd
+    echo
     echo -n "Confirm your password for main user: "
     read -r -s confirmMainPasswd
+    echo
     if [[ "$mainPasswd" == "$confirmMainPasswd" ]]; then
         break
     fi
@@ -213,7 +215,7 @@ fi
 # Get git name.
 echo -n "Git name [$defaultGitName]: "
 read -r gitName
-[[ -z $gitName ]] && gitName=$defaultGitName me
+[[ -z $gitName ]] && gitName=$defaultGitName
 
 # Get git email.
 echo -n "Git email [$defaultGitEmail]: "
