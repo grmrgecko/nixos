@@ -17,4 +17,4 @@ fi
 
 # Install NixOS.
 # shellcheck disable=SC2068
-nix --extra-experimental-features 'nix-command flakes' run 'github:nix-community/disko#disko-install' -- --impure --flake "path:$nixosDir/#$host" $@
+nix --extra-experimental-features 'nix-command flakes' run 'github:nix-community/disko#disko-install' -- --flake "path:$nixosDir/#$host" $@
