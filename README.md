@@ -40,4 +40,5 @@ After install is complete, you can then rsync the nixos dir to the user account 
 nix-shell -p rsync
 mount -o compress=zstd /dev/mapper/crypted /mnt/hdd
 rsync -av /root/nixos/ /mnt/hdd/home/grmrgecko/nixos/
+umount /mnt/hdd
 ```

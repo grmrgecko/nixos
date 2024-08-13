@@ -9,5 +9,6 @@
     ../modules/nixos/management.nix
     ../modules/nixos/desktop.nix
     ../modules/nixos/docker.nix
+    ../modules/nixos/mnt-merged.nix
   ];
 }
