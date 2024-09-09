@@ -21,6 +21,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "btrfs" ];
+  boot.kernel.sysctl = {
+    "kernel.sysrq" = 1;
+    "fs.inotify.max_user_watches" = 999999999;
+    "vm.max_map_count" = 2147483642;
+  };
 
   # BTRFS Scrubbing Services.
   services.btrfs.autoScrub.enable = true;

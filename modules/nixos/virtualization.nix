@@ -15,9 +15,14 @@
       /run/current-system/sw/bin/iptables -I FORWARD -m physdev --physdev-is-bridged -j ACCEPT
     '';
 
-  boot.kernel.sysctl."net.bridge.bridge-nf-call-ip6tables" = 0;
-  boot.kernel.sysctl."net.bridge.bridge-nf-call-iptables" = 0;
-  boot.kernel.sysctl."net.bridge.bridge-nf-call-arptables" = 0;
+  boot.kernel.sysctl = {
+    "net.bridge.bridge-nf-call-ip6tables" = 0;
+    "net.bridge.bridge-nf-call-iptables" = 0;
+    "net.bridge.bridge-nf-call-arptables" = 0;
+    # Fixing ESP Home No buffer space available
+    "net.ipv4.igmp_max_memberships" = 50;
+    "net.ipv4.igmp_max_msf" = 30;
+  };
 
   virtualisation.libvirtd = {
     enable = true;
