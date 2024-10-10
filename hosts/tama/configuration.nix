@@ -19,6 +19,9 @@
   boot.kernelParams = [
     "iommu=soft"
   ];
+  boot.initrd.kernelModules = [
+    "mpt3sas"
+  ];
 
   # Enable NFS export for kvm storage.
   services.nfs.server.enable = true;

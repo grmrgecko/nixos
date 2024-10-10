@@ -12,7 +12,7 @@
         partitions = {
           ESP = {
             name = "boot";
-            size = "500M";
+            size = "1024M";
             type = "EF00";
             content = {
               type = "filesystem";
