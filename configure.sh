@@ -68,9 +68,25 @@ chooseYN() {
     done
 }
 
+remoteAddr=""
+echo "If you are configuring a remote machine, ensure you have ssh access with keys."
+echo -n "Configuring [local machine]: "
+read -r CHOICE
+if [[ -n $CHOICE ]]; then
+    remoteAddr="$CHOICE"
+fi
+sshCmd=""
+if [[ -n $remoteAddr ]]; then
+    if ssh "$remoteAddr" /usr/bin/env true; then
+        sshCmd="ssh $remoteAddr"
+    else
+        echo "Unable to confirm connection to remote $remoteAddr"
+    fi
+fi
+
 # Determine video drivers based on PCI devices.
 videoDrivers="unknown"
-pciRaw=$(lspci | grep -E 'VGA')
+pciRaw=$($sshCmd lspci | grep -E 'VGA')
 if [[ "$pciRaw" =~ QXL ]]; then
     videoDrivers="qxl"
 elif [[ "$pciRaw" =~ NVIDIA ]]; then
@@ -111,7 +127,7 @@ echo
 echo "Select a disk from the list below:"
 # List disks to allow a choice to be made without stopping
 # configuration and verifying available disks.
-lsblk -o PATH,ID-LINK,SIZE -t
+$sshCmd lsblk -o PATH,ID-LINK,SIZE -t
 echo
 echo -n "Choose disk (/dev/disk/by-id/{ID-LINK}) [$diskDefault]: "
 read -r disk
@@ -143,7 +159,7 @@ if [[ "$CHOICE" == "y" ]]; then
         echo "Passwords do not match, try again."
     done
     # Save the password to the tmpfs for disko to pick up during partitioning.
-    echo "$luksPasswd" > /tmp/secret.key
+    echo -n "$luksPasswd" | $sshCmd dd of=/tmp/secret.key
 fi
 
 # Get username for the main user.
@@ -171,7 +187,7 @@ while true; do
 done
 # Use mkpasswd to create a hashed password with the lastest
 # linux password hashing algorithm.
-password=$(mkpasswd "$mainPasswd")
+password=$($sshCmd mkpasswd "\"$mainPasswd\"")
 
 # Determine SSH keys to allow into the system.
 sshKeys=()
@@ -231,7 +247,7 @@ rec {
   locale = "en_US.UTF-8";
   packages = "${PACKAGES}";
   profile = "${PROFILE}";
-  hostId = (builtins.substring 0 8 (builtins.readFile "/etc/machine-id"));
+  hostId = "$(tr -dc a-f0-9 </dev/urandom | head -c 8)";
   hostName = "${hostName}";
   videoDrivers = "${videoDrivers}";
   disk = {
@@ -261,4 +277,4 @@ EOF
 # Generate hardware-configuration.nix without filesystems as we use the disko partitoning flake.
 echo
 echo "Generating hardware-configuration.nix"
-nixos-generate-config --no-filesystems --show-hardware-config | tee "$nixosDir/hardware-configuration.nix"
+$sshCmd nixos-generate-config --no-filesystems --show-hardware-config | tee "$nixosDir/hardware-configuration.nix"
