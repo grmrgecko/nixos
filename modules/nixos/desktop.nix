@@ -55,6 +55,7 @@
     # Remote management
     remmina
     transmission-remote-gtk
+    virt-manager
 
     # Development
     kate
