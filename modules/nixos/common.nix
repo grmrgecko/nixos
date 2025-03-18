@@ -63,6 +63,7 @@
     git
     rsync
     borgbackup
+    ethtool
 
     # Disk Tools
     btrfs-progs

@@ -17,7 +17,7 @@
     };
 
     home-manager-unstable = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     flatpaks.url = "github:GermanBread/declarative-flatpak/stable-v3";

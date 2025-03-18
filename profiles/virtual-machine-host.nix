@@ -8,6 +8,7 @@
     ../modules/nixos/users.nix
     ../modules/nixos/management.nix
     ../modules/nixos/monitoring.nix
+    ../modules/nixos/docker.nix
     ../modules/nixos/virtualization.nix
   ];
 
