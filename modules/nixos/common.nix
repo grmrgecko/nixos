@@ -96,6 +96,12 @@
     '';
   };
 
+  # Added paths.
+  environment.etc."environment.d/00-custom-path.conf".text = ''
+    PATH="$PATH:/usr/local/bin:/usr/local/sbin:/usr/local/ubin"
+  '';
+
+
   # Nix Package Auto Cleanup
   nix = {
     settings.auto-optimise-store = true;

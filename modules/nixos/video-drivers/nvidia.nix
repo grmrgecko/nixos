@@ -4,8 +4,20 @@
   # Display drivers.
   hardware.graphics = {
     enable = true;
+    enable32Bit = true;
   };
   services.xserver.videoDrivers = [ "nvidia" ];
+
+  # Docker
+  hardware.nvidia-container-toolkit.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    cudatoolkit
+    libGLU
+    libGL
+    libnvidia-container
+    nvidia-container-toolkit
+  ];
 
   hardware.nvidia = {
 
