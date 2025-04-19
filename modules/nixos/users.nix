@@ -33,7 +33,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    unstable.nodejs_22
+    nodejs_23
     pure-prompt
     fastfetch
     home-manager

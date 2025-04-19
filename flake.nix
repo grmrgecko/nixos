@@ -73,7 +73,6 @@
       system = settings.system;
       specialArgs = {
         inherit inputs;
-        inherit pkgs;
         inherit settings;
       };
       modules = [

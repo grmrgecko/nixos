@@ -20,7 +20,7 @@ if ! grep -q "nixosConfigurations.$host " flake.nix; then
 fi
 
 # Update nixpkgs.
-if ! $sudoCmd nix flake update "$nixosDir"; then
+if ! $sudoCmd nix flake update; then
     echo "Update failed"
     exit 1
 fi
