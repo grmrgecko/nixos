@@ -111,7 +111,7 @@
     };
     gc = {
       automatic = true;
-      dates = "weekly";
+      dates = "Mon 3:40";
       options = "--delete-oder-than 7d";
     };
   };
