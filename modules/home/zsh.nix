@@ -21,7 +21,7 @@
       export VIDEO="mpv"
       export OPENER="xdg-open"
     '';
-    initExtra = ''
+    initContent = ''
       # Set emacs key binding.
       bindkey -e
 

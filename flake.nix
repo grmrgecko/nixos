@@ -20,11 +20,11 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flatpaks.url = "github:GermanBread/declarative-flatpak/stable-v3";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
   };
 
   # Flake outputs, NixOS and Home Configurations.
-  outputs = inputs@{ self, flatpaks, ... }:
+  outputs = inputs@{ self, nix-flatpak, ... }:
   let
     # Load settings.nix or the default if not exists.
     settings = (if (builtins.pathExists ./settings.nix)
@@ -78,7 +78,7 @@
       modules = [
         inputs.disko.nixosModules.disko
         home-manager.nixosModules.default
-        flatpaks.nixosModules.default
+        nix-flatpak.nixosModules.nix-flatpak
         config
       ];
     };
@@ -91,7 +91,7 @@
         inherit settings;
       };
       modules = [
-        flatpaks.homeManagerModules.default
+        nix-flatpak.homeManagerModules.nix-flatpak
         config
       ];
     };

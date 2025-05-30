@@ -33,7 +33,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    nodejs_23
+    nodejs
     pure-prompt
     fastfetch
     home-manager
@@ -47,7 +47,6 @@
     users = {
       ${settings.user.name} = {
         imports = [
-          inputs.flatpaks.homeManagerModules.default
           ../../users/main-user.nix
         ];
       };
