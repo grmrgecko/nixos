@@ -242,12 +242,12 @@ read -r gitEmail
 echo "Generating settings.nix:"
 cat <<EOF | tee "$nixosDir/settings.nix"
 rec {
-  system = "x86_64-linux";
+  system = "$($sshCmd uname -m)-linux";
   timezone = "America/Chicago";
   locale = "en_US.UTF-8";
   packages = "${PACKAGES}";
   profile = "${PROFILE}";
-  hostId = "$(tr -dc a-f0-9 </dev/urandom | head -c 8)";
+  hostId = "$($sshCmd tr -dc a-f0-9 </dev/urandom | head -c 8)";
   hostName = "${hostName}";
   videoDrivers = "${videoDrivers}";
   disk = {

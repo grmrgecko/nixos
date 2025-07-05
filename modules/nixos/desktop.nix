@@ -58,8 +58,7 @@
     virt-manager
 
     # Development
-    kate
-    arduino-ide
+    kdePackages.kate
 
     # Multimedia
     clementine
@@ -73,7 +72,7 @@
 
     # Software defined radio
     gqrx
-  ];
+  ] ++ (if settings.system=="x86_64-linux" then [ arduino-ide ] else []);
 
   # Kodi
   services.xserver.desktopManager.kodi.enable = true;
